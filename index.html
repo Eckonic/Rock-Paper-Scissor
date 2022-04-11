@@ -11,32 +11,93 @@
   </head>
 
   <body>
-     
 
 </body>
-
 <script>
+  //Array variable to contain possible moves for the computer.
+  let move = ['rock', 'paper', 'scissors'];
 
-    const random = ['rock', 'paper', 'scissors'];
-    const playerSelection = 'rock';
-    let computerSelection = computerPlay();
+  //Function to randomise the variable move array.
+  let computerPlay = () => move [Math.floor(Math.random() * move.length)];
+  
+  //Function to invoke prompt and lowerCasing user's input.
+  let playerPrompt = () => {
+    let input = prompt("Choose: Rock, Paper or Scissors.")
+    let playerChoice = input.toLowerCase();
+    return playerChoice
+  }
 
-    function computerPlay() {
-        return random[Math.floor(Math.random() * random.length)];
+  //Function to play a single round of RPS.
+  function playRound() {
+        const playerSelection = playerPrompt();
+        const computerSelection = computerPlay();
+
+    if (playerSelection === 'rock' && computerSelection === 'rock') {
+            return "It's a Tie!"
+    }   else if (playerSelection === 'rock' && computerSelection === 'paper') {
+            return "You lose! Paper beats rock."
+    }   else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+            return "You win! Rock beats scissors."
+    }   else if (playerSelection === 'paper' && computerSelection === 'rock' ) {
+            return "You win! Paper beats rocks"
+    }   else if (playerSelection === 'paper' && computerSelection === 'paper') {
+            return "It's a tie!"
+    }   else if (playerSelection === 'paper' && computerSelection === 'scissors') {
+            return "You lose! Scissors beats Paper."
+    }   else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+            return  "You lose! Rock beats Scissors."
+    }   else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+            return "You win! Scissors beats Paper."
+    }   else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
+            return "It's a tie!"
     }
-
-    function playRound(playerSelection, computerSelection) {
-        if(playerSelection === 'rock' && computerSelection === 'rock'){
-            return 'Tied!'
-        } else if(playerSelection === 'rock' && computerSelection === 'scissors') {
-            return 'You won!'
-        } else if(playerSelection ==='rock' && computerSelection === 'paper') {
-            return 'You lost...'
+  }
+  //Variables to store playerscore and computerscore.
+  let playerScore = 0;
+  let computerScore = 0;
+ 
+  /*
+  Result function takes the playerScore and computerScore value
+  and compare them to eachother to determine who wins.
+  */
+  function result(){
+        if (playerScore > computerScore) {
+                console.log("Congratulations! You won!")
+        } else if (playerScore < computerScore) {
+                console.log("Too bad... Computer wins.")
+        } else if (playerScore === computerScore) {
+                console.log("Neither of you won!")
+        }
+  }
+   /*
+   The "main function" that runs the playRound function 5 times. 
+   points are allocated to the winner. At the end of the function,
+   the result function is called and announces a winner based on
+   the allocated points stored in the global playerScore and computerScore
+   value.
+   */
+  function game() {      
+    for (let i = 0; i < 5; i++) {
+        let rounds = playRound();
+        console.log(rounds)
+        if (rounds === "You win! Rock beats scissors." ){
+                playerScore++;   
+        } else if (rounds === "You win! Scissors beats Paper."){
+                playerScore++;
+        } else if (rounds === "You win! Paper beats rocks") {
+                playerScore++;
+        } else if (rounds === "You lose! Paper beats rock.") {
+                computerScore++;
+        } else if (rounds === "You lose! Scissors beats Paper.") {
+                computerScore++;
+        } else if (rounds === "You lose! Rock beats Scissors.") {
+                computerScore++;
         }
     }
+    result();
+  }
 
-    console.log(playRound(playerSelection, computerSelection));
-
-    
+  //Used to call the game function upon refreshing webpage.
+  game();
 </script>
 </html>
